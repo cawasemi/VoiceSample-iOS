@@ -13,12 +13,13 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var buttonContainerView: UIView!
     @IBOutlet weak var voiceControlButton: UIButton!
-
+    @IBOutlet weak var languageSelectControl: UISegmentedControl!
+    
     @IBOutlet weak var voiceTextView: UITextView!
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var recognizingTextView: UITextView!
     
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
+    private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
@@ -83,6 +84,23 @@ class ViewController: UIViewController {
             voiceControlButton.setTitle("停止中", for: [])
         } else {
             print("Starting...")
+            let localIdentifier: String
+            switch languageSelectControl.selectedSegmentIndex {
+            case 0:
+                localIdentifier = "ja-JP"
+                break
+            case 1:
+                localIdentifier = "en-US"
+                break
+            default:
+                return
+            }
+            guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: localIdentifier)) else {
+                return
+            }
+            speechRecognizer = recognizer
+            speechRecognizer.delegate = self
+
             try! startRecording()
             voiceControlButton.setTitle("音声認識を中止", for: [])
         }
