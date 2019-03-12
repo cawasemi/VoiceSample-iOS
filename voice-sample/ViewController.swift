@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var voiceControlButton: UIButton!
 
     @IBOutlet weak var voiceTextView: UITextView!
+    @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var recognizingTextView: UITextView!
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
@@ -27,8 +28,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         voiceTextView.isEditable = false
+        recognizingTextView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+        recognizingTextView.textColor = UIColor(white: 0.8, alpha: 1.0)
         recognizingTextView.isEditable = false
-        recognizingTextView.text = ""
+        recognizingTextView.text = nil
+        
+        baseView.backgroundColor = UIColor(white: 0.7, alpha: 1.0)
         
         voiceControlButton.setTitle("Start", for: .normal)
         voiceControlButton.addTarget(self, action: #selector(onVoiceControlButtonTapped(_:)), for: .touchUpInside)
@@ -160,6 +165,7 @@ class ViewController: UIViewController {
         try audioEngine.start()
         
         voiceTextView.text = "どうぞ喋ってください。"
+        recognizingTextView.text = "認識中のテキストが表示されます。"
     }
 }
 
