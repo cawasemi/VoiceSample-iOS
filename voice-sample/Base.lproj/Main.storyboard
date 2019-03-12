@@ -19,22 +19,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRo-7h-qKP">
-                                <rect key="frame" x="0.0" y="20" width="375" height="62"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7G-ae-NJ5">
-                                        <rect key="frame" x="164.5" y="16" width="46" height="30"/>
+                                        <rect key="frame" x="164.5" y="17" width="46" height="30"/>
                                         <state key="normal" title="Button"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="W7G-ae-NJ5" firstAttribute="top" secondItem="JRo-7h-qKP" secondAttribute="top" constant="16" id="JOx-Sr-QvV"/>
-                                    <constraint firstAttribute="bottom" secondItem="W7G-ae-NJ5" secondAttribute="bottom" constant="16" id="cse-7N-5k1"/>
+                                    <constraint firstAttribute="height" constant="64" id="Usf-Rl-mMU"/>
                                     <constraint firstItem="W7G-ae-NJ5" firstAttribute="centerX" secondItem="JRo-7h-qKP" secondAttribute="centerX" id="hLz-cu-456"/>
+                                    <constraint firstItem="W7G-ae-NJ5" firstAttribute="centerY" secondItem="JRo-7h-qKP" secondAttribute="centerY" id="mTz-CI-JXP"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OsU-Tx-xro">
-                                <rect key="frame" x="0.0" y="82" width="375" height="585"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="259.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-BN-X4t">
+                                <rect key="frame" x="0.0" y="343.5" width="375" height="323.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -43,17 +49,23 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="RJK-BN-X4t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BG6-Ia-o4o"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OsU-Tx-xro" secondAttribute="trailing" id="EnV-ur-VLE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="RJK-BN-X4t" secondAttribute="bottom" id="IJ2-xj-ade"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JRo-7h-qKP" secondAttribute="trailing" id="KPV-ha-phn"/>
                             <constraint firstItem="OsU-Tx-xro" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Nlb-gV-2ZQ"/>
-                            <constraint firstItem="OsU-Tx-xro" firstAttribute="top" secondItem="JRo-7h-qKP" secondAttribute="bottom" id="i6o-rR-PvC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OsU-Tx-xro" secondAttribute="bottom" id="qGN-qN-IXE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="centerY" secondItem="OsU-Tx-xro" secondAttribute="bottom" id="RvN-K6-JLa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RJK-BN-X4t" secondAttribute="trailing" id="eNl-WC-qu9"/>
+                            <constraint firstItem="OsU-Tx-xro" firstAttribute="top" secondItem="JRo-7h-qKP" secondAttribute="bottom" id="lfi-If-tCC"/>
+                            <constraint firstItem="RJK-BN-X4t" firstAttribute="top" secondItem="OsU-Tx-xro" secondAttribute="bottom" id="ofV-Eo-L4Q"/>
                             <constraint firstItem="JRo-7h-qKP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="tcF-Mi-o31"/>
                             <constraint firstItem="JRo-7h-qKP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vXj-MP-S7D"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="buttonContainerView" destination="JRo-7h-qKP" id="OuT-ak-JZH"/>
+                        <outlet property="recognizingTextView" destination="RJK-BN-X4t" id="kU9-0L-LKA"/>
                         <outlet property="voiceControlButton" destination="W7G-ae-NJ5" id="Foq-MB-TyR"/>
                         <outlet property="voiceTextView" destination="OsU-Tx-xro" id="aFd-mM-ILW"/>
                     </connections>

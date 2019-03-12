@@ -11,8 +11,11 @@ import Speech
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var voiceTextView: UITextView!
+    @IBOutlet weak var buttonContainerView: UIView!
     @IBOutlet weak var voiceControlButton: UIButton!
+
+    @IBOutlet weak var voiceTextView: UITextView!
+    @IBOutlet weak var recognizingTextView: UITextView!
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -23,6 +26,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
+        voiceTextView.isEditable = false
+        recognizingTextView.isEditable = false
+        recognizingTextView.text = ""
+        
         voiceControlButton.setTitle("Start", for: .normal)
         voiceControlButton.addTarget(self, action: #selector(onVoiceControlButtonTapped(_:)), for: .touchUpInside)
         speechRecognizer.delegate = self
@@ -45,7 +52,8 @@ class ViewController: UIViewController {
         switch authStatus {
         case .authorized:
             me.voiceControlButton.isEnabled = true
-            
+            me.voiceControlButton.setTitle("音声認識スタート", for: [])
+
         case .denied:
             me.voiceControlButton.isEnabled = false
             me.voiceControlButton.setTitle("音声認識へのアクセスが拒否されています。", for: .disabled)
@@ -64,10 +72,12 @@ class ViewController: UIViewController {
 
     @objc private func onVoiceControlButtonTapped(_ sender: Any?) {
         if audioEngine.isRunning {
+            print("Stopping...")
             audioEngine.stop()
             recognitionRequest?.endAudio()
             voiceControlButton.setTitle("停止中", for: [])
         } else {
+            print("Starting...")
             try! startRecording()
             voiceControlButton.setTitle("音声認識を中止", for: [])
         }
@@ -96,12 +106,26 @@ class ViewController: UIViewController {
             var isFinal = false
             
             if let result = result {
-                self.voiceTextView.text = result.bestTranscription.formattedString
+                let segments = result.bestTranscription.segments.filter({$0.timestamp != 0})
+                if segments.isEmpty {
+                    self.recognizingTextView.text = result.bestTranscription.formattedString
+                } else {
+                    self.voiceTextView.text = result.bestTranscription.formattedString
+                }
                 isFinal = result.isFinal
+
+                print("---- >>>>")
+                segments.enumerated().forEach({ (item) in
+                    print("\(item.offset): \(item.element)")
+                })
+                print("---- <<<<\n")
             }
             
             // エラーがある、もしくは最後の認識結果だった場合の処理
             if error != nil || isFinal {
+                if let error = error {
+                    dump(error)
+                }
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
                 
@@ -143,7 +167,7 @@ extension ViewController: SFSpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             voiceControlButton.isEnabled = true
-            voiceControlButton.setTitle("音声認識スタート", for: .disabled)
+            voiceControlButton.setTitle("音声認識スタート", for: [])
         } else {
             voiceControlButton.isEnabled = false
             voiceControlButton.setTitle("音声認識ストップ", for: .disabled)
